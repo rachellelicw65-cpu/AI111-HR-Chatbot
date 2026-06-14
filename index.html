@@ -1,152 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HR Assistant • Preface</title>
-    <script src="[cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-    <link rel="stylesheet" href="[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/@n8n/chat@latest/dist/style.css)">
-    <style>
-        @import url('[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap)');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Preface HR Assistant Chatbot</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #f5f7fa;
+    }
 
-        :root {
-            --font-sans: 'Inter', system_ui, sans-serif;
-        }
+    #chat-container {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
 
-        body {
-            font-family: 'Inter', system_ui, sans-serif;
-        }
+    .chat-header {
+      background-color: #004aad;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
 
-        .title-font {
-            font-family: 'Space Grotesk', 'Inter', system_ui, sans-serif;
-            font-weight: 600;
-            letter-spacing: -0.025em;
-        }
-
-        .chat-container {
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-        }
-
-        .n8n-chat {
-            --chat--color-primary: #0A66C2;
-            --chat--color-secondary: #0A66C2;
-            --chat--color-background: #ffffff;
-            --chat--color-surface: #ffffff;
-            --chat--border-radius: 16px;
-        }
-        
-        .n8n-chat .chat-input {
-            border-radius: 9999px;
-            border: 1px solid #e5e7eb;
-        }
-        
-        .n8n-chat .chat-message {
-            max-width: 85%;
-        }
-    </style>
+    n8n-chat {
+      flex: 1;
+      border: none;
+    }
+  </style>
 </head>
-<body class="bg-zinc-950 text-zinc-200 min-h-screen">
-    <div class="max-w-5xl mx-auto">
-        <!-- Header -->
-        <div class="flex items-center justify-between px-8 py-6 border-b border-zinc-800">
-            <div class="flex items-center gap-x-3">
-                <div class="w-9 h-9 bg-white rounded-xl flex items-center justify-center">
-                    <span class="text-zinc-950 font-bold text-2xl">P</span>
-                </div>
-                <div>
-                    <h1 class="title-font text-3xl font-semibold tracking-tighter">Preface</h1>
-                    <p class="text-xs text-zinc-500 -mt-0.5">HR Assistant</p>
-                </div>
-            </div>
-            
-            <div class="flex items-center gap-x-2">
-                <div class="px-3 py-1.5 bg-zinc-900 rounded-full flex items-center gap-x-2 text-xs">
-                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                    <span class="text-emerald-400 font-medium">Online</span>
-                </div>
-            </div>
-        </div>
+<body>
+  <div id="chat-container">
+    <div class="chat-header">Preface HR Assistant</div>
+    <!-- The actual chat widget -->
+    <n8n-chat></n8n-chat>
+  </div>
 
-        <!-- Main Container -->
-        <div class="flex flex-col h-[calc(100vh-73px)]">
-            
-            <!-- Subtitle -->
-            <div class="px-8 pt-8 pb-6">
-                <h2 class="text-2xl font-semibold tracking-tight">Hello, how can I help you today?</h2>
-                <p class="text-zinc-400 mt-1.5">Ask me anything about HR policies, leave, benefits, or company guidelines.</p>
-            </div>
+  <!-- Load the n8n chat web component -->
+  <script type="module">
+    import "@n8n/chat";
 
-            <!-- Chat Container -->
-            <div class="flex-1 px-8 pb-8">
-                <div id="n8n-chat-container" 
-                     class="h-full w-full mx-auto max-w-[820px] bg-white border border-zinc-200 shadow-2xl chat-container rounded-3xl overflow-hidden">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- n8n/chat Script -->
-    <script type="module">
-        import { createChat } from '[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/@n8n/chat@latest/dist/chat.bundle.es.js)';
-
-        // ========== CUSTOMIZATION VARIABLES ==========
-        const chatConfig = {
-            // Core settings
-            webhookUrl: 'https://ciwali65.app.n8n.cloud/webhook/1134224f-6393-4832-a202-598f98c69dd9/chat', // ← Replace with your n8n webhook URL
-            
-            // Chat metadata
-            target: '#n8n-chat-container',
-            mode: 'fullscreen',
-            showWelcomeScreen: false,
-            initialMessages: [
-                'Hello! I\'m Preface\'s HR Assistant.',
-                'How can I help you with HR policies today?'
-            ],
-            
-            // Branding & Appearance
-            chatTitle: 'HR Assistant',
-            chatTitleAvatar: '[cdn.jsdelivr.net](https://cdn.jsdelivr.net/gh/stevenjoezhang/Preface-logo/placeholder.svg)', // Optional avatar
-            chatSubtitle: 'Powered by Preface AI',
-            
-            // Theme colors
-            chatColors: {
-                primary: '#0A66C2',
-                secondary: '#0A66C2',
-                background: '#ffffff',
-                surface: '#ffffff',
-                text: '#18181b',
-                textMuted: '#71717a'
-            },
-            
-            // Behavior
-            enableStreaming: false, // Required: Streaming disabled
-            loadPreviousSession: true,
-            persistSession: true,
-            closeChatOnClickOutside: false,
-            allowFileUploads: false,
-            showTimestamp: true,
-            
-            // Input
-            inputPlaceholder: 'Ask about HR policies...',
-            
-            // Advanced options
-            metadata: {
-                company: 'Preface',
-                assistantType: 'HR'
-            },
-            
-            // Custom styling overrides (if needed)
-            cssVariablesOverride: {
-                '--chat--border-radius': '16px',
-                '--chat--font-family': "'Inter', system_ui, sans-serif"
-            }
-        };
-
-        // Initialize the n8n chat
-        createChat(chatConfig);
-        
-        // Optional: Expose chat instance for debugging
-        window.n8nChat = chatConfig;
-    </script>
+    // Configure the chat widget
+    const chatEl = document.querySelector("n8n-chat");
+    chatEl.apiUrl = 'https://ciwali65.app.n8n.cloud/webhook/1134224f-6393-4832-a202-598f98c69dd9/chat'; // replace later
+    chatEl.enableStreaming = false; // required
+    chatEl.botName = "HR Assistant";
+    chatEl.botAvatar = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+    chatEl.userAvatar = "https://cdn-icons-png.flaticon.com/512/847/847969.png";
+    chatEl.placeholder = "Ask me about HR policies...";
+    chatEl.theme = {
+      primaryColor: "#004aad",
+      secondaryColor: "#f5f7fa",
+      textColor: "#333333",
+      userMessageColor: "#e1f0ff",
+      botMessageColor: "#ffffff",
+    };
+    chatEl.defaultOpen = true;
+    chatEl.showHeader = false;
+    chatEl.showFooter = true;
+    chatEl.allowFileUpload = false;
+  </script>
 </body>
 </html>
