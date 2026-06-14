@@ -1,70 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Preface HR Assistant Chatbot</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: Arial, sans-serif;
-      background-color: #f5f7fa;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preface HR Assistant</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+    
+    <style>
+        /* Reset and enforce full-page layout */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f2f4f8;
+        }
 
-    #chat-container {
-      height: 100%;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-    }
+        /* Fullscreen container layout for the n8n target element */
+        #n8n-chat-container {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
 
-    .chat-header {
-      background-color: #004aad;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
+        /* Customizing @n8n/chat styles using official CSS Custom Variables 
+        */
+        :root {
+            /* Theme Colors */
+            --chat--color--primary: #0052cc;              /* Core brand color (e.g., Deep Tech Blue) */
+            --chat--color--primary-shade-50: #0043a4;     /* Slightly darker for hover/active states */
+            --chat--color--primary--shade-100: #003582;    /* Even darker shade */
+            --chat--color--secondary: #20b69e;            /* Secondary Accent Color (Teal) */
+            --chat--color-secondary-shade-50: #1ca08a;
 
-    n8n-chat {
-      flex: 1;
-      border: none;
-    }
-  </style>
+            /* Base Elements */
+            --chat--color-white: #ffffff;
+            --chat--color-light: #f7f9fc;
+            --chat--color-light-shade-50: #eef2f7;
+            
+            /* Text & Layout Adjustments */
+            --chat--window--height: 100%;                 /* Fallbacks for container inheritance */
+            --chat--window--width: 100%;
+            --chat--border-radius: 0px;                   /* Fullscreen mode benefits from sharp edge panels */
+        }
+    </style>
 </head>
 <body>
-  <div id="chat-container">
-    <div class="chat-header">Preface HR Assistant</div>
-    <!-- The actual chat widget -->
-    <n8n-chat></n8n-chat>
-  </div>
 
-  <!-- Load the n8n chat web component -->
-  <script type="module">
-    import "@n8n/chat";
+    <div id="n8n-chat-container"></div>
 
-    // Configure the chat widget
-    const chatEl = document.querySelector("n8n-chat");
-    chatEl.apiUrl = 'https://ciwali65.app.n8n.cloud/webhook/1134224f-6393-4832-a202-598f98c69dd9/chat'; // replace later
-    chatEl.enableStreaming = false; // required
-    chatEl.botName = "HR Assistant";
-    chatEl.botAvatar = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
-    chatEl.userAvatar = "https://cdn-icons-png.flaticon.com/512/847/847969.png";
-    chatEl.placeholder = "Ask me about HR policies...";
-    chatEl.theme = {
-      primaryColor: "#004aad",
-      secondaryColor: "#f5f7fa",
-      textColor: "#333333",
-      userMessageColor: "#e1f0ff",
-      botMessageColor: "#ffffff",
-    };
-    chatEl.defaultOpen = true;
-    chatEl.showHeader = false;
-    chatEl.showFooter = true;
-    chatEl.allowFileUpload = false;
-  </script>
+    <script type="module">
+        import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+        createChat({
+            // REPLACE THIS: Insert your production n8n workflow Chat Trigger webhook URL here
+            webhookUrl: 'https://ciwali65.app.n8n.cloud/webhook/1134224f-6393-4832-a202-598f98c69dd9/chat',
+            
+            // Webhook HTTP configurations
+            webhookConfig: {
+                method: 'POST',
+                headers: {}
+            },
+
+            // Target DOM selector where the UI elements render
+            target: '#n8n-chat-container',
+
+            // Mode can be 'window' (floating action bubble) or 'fullscreen' (takes up entire parent element)
+            mode: 'fullscreen',
+
+            // Key mappings expected by your n8n AI Agent / Chat Trigger Node configurations
+            chatInputKey: 'chatInput',
+            chatSessionKey: 'sessionId',
+
+            // Toggle to store/load chat history from browser local session
+            loadPreviousSession: true,
+
+            // Global context metadata payload forwarded alongside each message payload
+            metadata: {},
+
+            // Set to true to force users to click through a landing panel before messaging
+            showWelcomeScreen: false,
+
+            // Localization
+            defaultLanguage: 'en',
+            
+            // Internationalization configuration mappings 
+            i18n: {
+                en: {
+                    title: 'Preface HR Assistant 👋',
+                    subtitle: 'Ask me anything about company HR policies, leave balances, or handbooks.',
+                    footer: 'Powered by Preface AI Architecture',
+                    getStarted: 'Start New Conversation',
+                    inputPlaceholder: 'Type your HR-related question here...',
+                },
+            },
+
+            // SPEC REQUIREMENT: Disable streaming so responses are delivered fully assembled 
+            enableStreaming: false,
+
+            // Optional static introductory messages displayed upon initializing an empty chat
+            initialMessages: [
+                'Welcome to the Preface HR Assistant! 🏢',
+                'I can help guide you through our internal operational policies, holiday configurations, benefits, and office workflows.',
+                'What would you like to inquire about today?'
+            ],
+
+            // File Upload options (Adjust based on your n8n configuration)
+            allowFileUploads: false,
+            allowedFilesMimeTypes: ''
+        });
+    </script>
 </body>
 </html>
