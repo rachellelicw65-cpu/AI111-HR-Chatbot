@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Preface HR Assistant Chatbot</title>
+  <style>
+    /* Reset & full-page layout */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #f5f7fa;
+    }
+
+    #chat-container {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Optional custom styling for header */
+    .chat-header {
+      background-color: #004aad;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    /* Chat widget container */
+    #n8n-chat {
+      flex: 1;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div id="chat-container">
+    <div class="chat-header">Preface HR Assistant</div>
+    <div id="n8n-chat"></div>
+  </div>
+
+  <!-- Load @n8n/chat from CDN -->
+  <script src="https://unpkg.com/@n8n/chat"></script>
+  <script>
+    // Initialize the chat widget
+    const chat = new N8NChat({
+      // REQUIRED: replace with your n8n webhook URL later
+      apiUrl: 'https://ciwali65.app.n8n.cloud/webhook/1134224f-6393-4832-a202-598f98c69dd9/chat',
+
+      // Customization variables
+      target: "#n8n-chat",          // DOM element to mount chat
+      enableStreaming: false,       // disable streaming responses
+      botName: "HR Assistant",      // name shown for the bot
+      botAvatar: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", // sample avatar
+      userAvatar: "https://cdn-icons-png.flaticon.com/512/847/847969.png",  // sample user avatar
+      placeholder: "Ask me about HR policies...",
+      theme: {
+        primaryColor: "#004aad",    // Preface brand blue
+        secondaryColor: "#f5f7fa",  // background
+        textColor: "#333333",
+        userMessageColor: "#e1f0ff",
+        botMessageColor: "#ffffff",
+      },
+      defaultOpen: true,            // chat opens by default
+      showHeader: false,            // header hidden (we added our own)
+      showFooter: true,             // footer with input bar
+      allowFileUpload: false,       // disable file uploads
+    });
+  </script>
+</body>
+</html>
